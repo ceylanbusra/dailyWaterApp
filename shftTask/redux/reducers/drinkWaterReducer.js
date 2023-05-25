@@ -1,6 +1,8 @@
 const INITIAL_STATE = {
   drink: null,
-  intake: [],
+  intakeList: [],
+  instake: {},
+  goal: [],
 };
 
 const DrinkWaterReducer = (state = INITIAL_STATE, action) => {
@@ -9,6 +11,16 @@ const DrinkWaterReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         intake: action.payload,
+      };
+    case 'GET_INTAKE_LIST_UCCESS':
+      return {
+        ...state,
+        intakeList: action.payload,
+      };
+    case 'GET_GOAL_SUCCESS':
+      return {
+        ...state,
+        goal: action.payload,
       };
     default:
       return state;
