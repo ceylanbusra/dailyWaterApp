@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from '../screens/splashScreen';
+import HomeScreen from '../screens/homeScreen';
 
 const Stack = createNativeStackNavigator();
 const RootRouter = props => {
@@ -15,16 +16,16 @@ const RootRouter = props => {
             headerShown: false,
           }}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{
             headerTitleStyle: {},
             headerLeft: () => <></>,
             headerTitleAlign: 'center',
           }}
           name="Home"
-          component={Home}
+          component={HomeScreen}
         />
-        <Stack.Screen name="Detail" component={Detail} /> */}
+        {/* <Stack.Screen name="Detail" component={Detail} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
