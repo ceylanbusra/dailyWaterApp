@@ -2,21 +2,53 @@ import {Dimensions, StatusBar, StyleSheet, Text, View} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
-
+import CircularProgress from 'react-native-circular-progress-indicator';
+import {FlatList} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {getIntakeList} from '../redux/actions/drinkWaterAction';
+var control = false;
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+  const intakeList = useSelector(state => state.water);
   const [modal, setModal] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const [intakeListData, setIntakeListData] = useState(null);
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
+
+  useEffect(() => {
+    if (control === false) {
+      dispatch(getIntakeList());
+      console.log('intake list:', intakeList);
+      control = true;
+    }
+  }, [intakeList]);
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <View style={styles.firstContainer}>
-        <Text>xfdfgsdfg</Text>
-      </View>
-      <View style={styles.secondContainer}>
-        <Text>fgsdfg</Text>
+        <View>
+          <CircularProgress
+            value={50}
+            radius={120}
+            duration={2000}
+            progressValueColor={'grey'}
+            maxValue={200}
+            title={'Günlük içecek hedefi'}
+            titleFontSize={15}
+            titleColor={'grey'}
+            titleStyle={{fontWeight: 'bold'}}
+          />
+        </View>
+        <View>
+          {/* <FlatList
+            data={intakeList}
+            renderItem={({item}) => <Item title={item.title} />}
+            keyExtractor={item => item.id}
+          /> */}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -42,14 +74,13 @@ const styles = StyleSheet.create({
   firstContainer: {
     width: '100%',
     height: '50%',
-    backgroundColor: 'grey',
+
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   secondContainer: {
     width: '100%',
     height: '50%',
-    backgroundColor: 'black',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
   },
 });

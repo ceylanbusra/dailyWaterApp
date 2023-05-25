@@ -3,11 +3,11 @@ import {Alert} from 'react-native';
 
 export const getIntakeList = () => {
   return dispatch => {
-    dispatch({type: 'GET_INTAKE_REQUEST'}),
+    dispatch({type: 'GET_INTAKE_LIST_REQUEST'}),
       axios
         .get(`https://645ce732e01ac6105896bbce.mockapi.io/intake`)
         .then(res => {
-          console.log('res');
+          console.log('res', res.data);
           dispatch({
             type: 'GET_INTAKE_LIST_SUCCESS',
             payload: res.data,
