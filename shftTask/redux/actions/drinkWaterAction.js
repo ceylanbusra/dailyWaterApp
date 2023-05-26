@@ -5,7 +5,7 @@ export const getIntakeList = () => {
   return dispatch => {
     dispatch({type: 'GET_INTAKE_LIST_REQUEST'}),
       axios
-        .get(`https://645ce732e01ac6105896bbce.mockapi.io/intake`)
+        .get('https://645ce732e01ac6105896bbce.mockapi.io/intake')
         .then(res => {
           console.log('res', res.data);
           dispatch({
@@ -93,11 +93,11 @@ export const deleteIntake = (id, data) => {
   };
 };
 
-export const getGoal = id => {
+export const getGoal = () => {
   return dispatch => {
     dispatch({type: 'GET_GOAL_REQUEST'}),
       axios
-        .get(`https://645ce732e01ac6105896bbce.mockapi.io/goal/${id}`)
+        .get(`https://645ce732e01ac6105896bbce.mockapi.io/goal/1`)
         .then(res => {
           console.log('res');
           dispatch({
