@@ -4,7 +4,7 @@ import React from 'react';
 const DetailScreen = () => {
   return (
     <View>
-      <Text>D</Text>
+      <Text>Detaylar</Text>
     </View>
   );
 };
