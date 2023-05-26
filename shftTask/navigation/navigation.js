@@ -5,6 +5,9 @@ import SplashScreen from '../screens/splashScreen';
 import HomeScreen from '../screens/homeScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DetailScreen from '../screens/detailScreen';
+import ProfileScreen from '../screens/profileScreen';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Image} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -30,16 +33,41 @@ const RootRouter = props => {
           name="Home"
           component={MyTabs}
         />
-        {/* <Stack.Screen name="Detail" component={Detail} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 function MyTabs() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = require('../assets/home.png');
+          } else if (route.name === 'Details') {
+            iconName = require('../assets/details.png');
+          } else if (route.name === 'Profile') {
+            iconName = require('../assets/account.png');
+          }
+
+          // You can return any component that you like here!
+          return (
+            <Image
+              source={iconName}
+              size={size}
+              color={color}
+              style={{width: 25, height: 25}}
+            />
+          );
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+      })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Details" component={DetailScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }

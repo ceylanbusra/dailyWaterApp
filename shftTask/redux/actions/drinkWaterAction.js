@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
+import moment from 'moment';
 
 export const getIntakeList = () => {
+  const today = moment().startOf('day');
   return dispatch => {
     dispatch({type: 'GET_INTAKE_LIST_REQUEST'}),
       axios
@@ -13,7 +15,6 @@ export const getIntakeList = () => {
             payload: res.data,
           });
         })
-
         .catch(() => {
           Alert.alert('Bir hata Olustu');
         });
@@ -65,6 +66,7 @@ export const setIntake = (id, data) => {
             type: 'SET_INTAKE_LIST_SUCCESS',
             payload: res.data,
           });
+          dispatch(getIntakeList());
         })
         .catch(() => {
           Alert.alert('Bir hata Oluştu');
@@ -86,6 +88,7 @@ export const deleteIntake = (id, data) => {
             type: 'DELETE_INTAKE_SUCCESS',
             payload: res.data,
           });
+          dispatch(getIntakeList());
         })
         .catch(() => {
           Alert.alert('Bir hata Oluştu');
