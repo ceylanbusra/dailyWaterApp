@@ -8,11 +8,8 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {
-  Button,
   Colors,
-  DateTimePicker,
   RadioButton,
-  SectionsWheelPicker,
   Slider,
   Text,
   TouchableOpacity,
