@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Animated,
-  Easing,
-} from 'react-native';
+import {StyleSheet, SafeAreaView} from 'react-native';
 import LottieView from 'lottie-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -15,7 +8,7 @@ const Splash = ({navigation}) => {
   console.log('infoStatus:', info);
   setTimeout(() => {
     info ? navigation.navigate('InfoScreen') : navigation.navigate('Home');
-  }, 5000);
+  }, 3000);
   return (
     <SafeAreaView style={styles.container}>
       <LottieView

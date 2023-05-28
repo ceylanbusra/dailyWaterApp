@@ -43,11 +43,15 @@ const HomeScreen = () => {
   const [item, setItem] = useState(null);
   const [dailyList, setDailyList] = useState(null);
   const [dailyWater, setDailyWater] = useState(0);
+  const [step, setStep] = useState(null);
+  const [water1, setWater1] = useState(null);
+
   console.log('werty', info);
   //Modalın açma kapatma durumlarını kontrol eder.
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
     setNumber('');
+    setWater1(null);
   };
 
   //Sayfa ilk açıldığında tetiklenen method
@@ -85,6 +89,8 @@ const HomeScreen = () => {
         amounts => {
           const totalAmount = amounts.reduce((acc, curr) => acc + curr, 0);
           setDailyWater(totalAmount);
+          console.log('total amd', totalAmount);
+          dispatch({type: 'CALCULATE_DAILY_WATER', payload: totalAmount});
           console.log('dailyWater', totalAmount);
         },
       );
@@ -95,11 +101,13 @@ const HomeScreen = () => {
   const handleAddWater = async () => {
     const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
     const data = {
-      amount: 120,
+      amount: water1 ? water1 : 120,
       unit: 'ml',
       createdAt: currentDate,
     };
+    setModalVisible(false);
     await dispatch(postIntake(data));
+    setWater1(null);
   };
 
   //Eklenilen suyu siler.
@@ -185,13 +193,26 @@ const HomeScreen = () => {
           // subtitle="dsfsdfsd"
         />
         <Text style={{marginTop: 10}}>Günlük içecek hedefi</Text>
-        <TouchableOpacity onPress={handleAddWater}>
-          <Text>Su Ekle</Text>
-          <Image
-            source={require('../assets/glass.png')}
-            style={{width: 30, height: 30}}
-          />
-        </TouchableOpacity>
+        <View style={styles.addWaterContainer}>
+          <TouchableOpacity onPress={handleAddWater}>
+            <Text>200 ml Ekle</Text>
+            <Image
+              source={require('../assets/glass.png')}
+              style={{width: 30, height: 30}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setStep(1);
+              setModalVisible(true);
+            }}>
+            <Text>Başka Değer Gir</Text>
+            <Image
+              source={require('../assets/glass.png')}
+              style={{width: 30, height: 30}}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.list}>
         <Text>Bugünün kayıtları</Text>
@@ -203,8 +224,7 @@ const HomeScreen = () => {
           />
         ) : (
           <View style={{flex: 1, justifyContent: 'center'}}>
-            <Text
-              style={{fontSize: 18, textAlign: 'center', fontWeight: '600'}}>
+            <Text style={styles.textInfo}>
               Henüz su eklenmemiş. Lütfen içtiğiniz su miktarını giriniz...
             </Text>
           </View>
@@ -230,19 +250,40 @@ const HomeScreen = () => {
         // style={localStyles.modal}
         propagateSwipe={true}>
         <View style={styles.modalContent}>
-          <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>
-            {' '}
-            Su miktarını güncelleyin
-          </Text>
-          <Text>Önceki girilen su miktarı: {intake.amount} </Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={setNumber}
-            value={number}
-            placeholder="Su miktarını girin"
-            keyboardType="default"
-          />
-          <Button title="Güncelle" onPress={setDrink} />
+          {step === 1 ? (
+            <View>
+              <Text
+                style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>
+                {' '}
+                Su miktarı girin
+              </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={water1 => setWater1(water1)}
+                value={water1}
+                placeholder="Su miktarını girin"
+                keyboardType="default"
+              />
+              <Button title="Ekle" onPress={handleAddWater} />
+            </View>
+          ) : (
+            <View>
+              <Text
+                style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>
+                {' '}
+                Su miktarını güncelleyin
+              </Text>
+              <Text>Önceki girilen su miktarı: {intake.amount} </Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={setNumber}
+                value={number}
+                placeholder="Su miktarını girin"
+                keyboardType="default"
+              />
+              <Button title="Güncelle" onPress={setDrink} />
+            </View>
+          )}
         </View>
       </Modal>
       <Modal
@@ -339,5 +380,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textInfo: {fontSize: 18, textAlign: 'center', fontWeight: '600'},
+  addWaterContainer: {
+    padding: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '90%',
   },
 });

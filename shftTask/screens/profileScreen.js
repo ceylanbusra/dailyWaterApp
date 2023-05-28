@@ -31,6 +31,7 @@ const ProfileScreen = () => {
   const [modal, setModal] = useState(false);
   const [female, setFemale] = useState(femaleStatus);
   const [weight, setWeight] = useState(weightStatus);
+  const dailyWaterGoals = 30 * weight;
 
   //Sayfa ilk açıldığında tetiklenen method
   useEffect(() => {
@@ -89,6 +90,16 @@ const ProfileScreen = () => {
               <Text style={styles.itemText}>{weight}</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.itemContainer}>
+            <View>
+              <Text>Ortalama Günlük Almanız </Text>
+              <Text>Gereken Su Miktarı (Önerilen) </Text>
+            </View>
+            <View>
+              <Text style={styles.itemText}>{dailyWaterGoals} ml</Text>
+              <Text style={styles.itemText}>{dailyWaterGoals / 1000} l</Text>
+            </View>
+          </View>
         </ScrollView>
         <Modal
           isVisible={modal}
@@ -136,7 +147,7 @@ const ProfileScreen = () => {
                   color={Colors.green30}
                   onPress={() => setFemale('Kadın', setModal(false))}
                   selected={() => setFemale('Kadın')}
-                  // labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+                  labelStyle={{fontSize: 16, fontWeight: 'bold', margin: 5}}
                   contentOnLeft
                 />
                 <RadioButton
@@ -148,6 +159,7 @@ const ProfileScreen = () => {
                     setModal(false);
                   }}
                   selected={() => setFemale('Erkek')}
+                  labelStyle={{fontSize: 16, fontWeight: 'bold', margin: 5}}
                   contentOnLeft
                 />
               </View>

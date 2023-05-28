@@ -6,7 +6,6 @@ import HomeScreen from '../screens/homeScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DetailScreen from '../screens/detailScreen';
 import ProfileScreen from '../screens/profileScreen';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Image} from 'react-native';
 import InfoScreen from '../screens/infoScreen';
 const Stack = createNativeStackNavigator();
@@ -53,6 +52,8 @@ function MyTabs() {
 
           if (route.name === 'Home') {
             iconName = require('../assets/home.png');
+          } else if (route.name === 'Details') {
+            iconName = require('../assets/details.png');
           } else if (route.name === 'Profile') {
             iconName = require('../assets/account.png');
           }
@@ -71,7 +72,7 @@ function MyTabs() {
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-
+      <Tab.Screen name="Details" component={DetailScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

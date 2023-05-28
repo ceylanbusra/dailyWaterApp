@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   dailyWaterListStatus: false,
   dailyWaterSetStatus: false,
   dailyWaterDeleteStatus: false,
+  dailyDrinkWater: null,
 };
 
 const DrinkWaterReducer = (state = INITIAL_STATE, action) => {
@@ -48,6 +49,12 @@ const DrinkWaterReducer = (state = INITIAL_STATE, action) => {
         ...state,
         addWater: action.payload,
       };
+    case 'CALCULATE_DAILY_WATER':
+      return {
+        ...state,
+        dailyDrinkWater: action.payload,
+      };
+
     default:
       return state;
   }
