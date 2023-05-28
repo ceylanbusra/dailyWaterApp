@@ -6,12 +6,16 @@ import {persistStore, persistReducer} from 'redux-persist';
 import thunk from 'redux-thunk';
 import DrinkWaterReducer from '../reducers/drinkWaterReducer';
 
+import InfoReducer from '../reducers/infoReducer';
+
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['info'],
 };
 const rootReducer = combineReducers({
   water: DrinkWaterReducer,
+  info: InfoReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

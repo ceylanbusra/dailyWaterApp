@@ -2,7 +2,6 @@
 import {
   StatusBar,
   StyleSheet,
-  Text,
   View,
   FlatList,
   TouchableOpacity,
@@ -15,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import {useDispatch, useSelector} from 'react-redux';
+import {Text} from 'react-native-ui-lib';
 import {
   deleteIntake,
   getGoal,
@@ -35,13 +35,15 @@ const HomeScreen = () => {
     addWater,
     dailyWaterDeleteStatus,
   } = useSelector(state => state.water);
+  const {info} = useSelector(state => state.info);
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [number, setNumber] = useState('');
   const [item, setItem] = useState(null);
   const [dailyList, setDailyList] = useState(null);
   const [dailyWater, setDailyWater] = useState(0);
-
+  console.log('werty', info);
   //Modalın açma kapatma durumlarını kontrol eder.
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -169,7 +171,6 @@ const HomeScreen = () => {
             <Text>Yemek yedikten Hemen Sonra Su İçmeyin.</Text>
           </View>
         </View>
-
         <CircularProgress
           value={dailyWater}
           radius={80}

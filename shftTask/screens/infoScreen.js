@@ -8,11 +8,8 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {
-  Button,
   Colors,
-  DateTimePicker,
   RadioButton,
-  SectionsWheelPicker,
   Slider,
   Text,
   TouchableOpacity,
@@ -21,26 +18,29 @@ import {
 import Modal from 'react-native-modal';
 import {getGoal} from '../redux/actions/drinkWaterAction';
 import {useDispatch, useSelector} from 'react-redux';
-const ProfileScreen = () => {
+
+const InfoScreen = ({navigation}) => {
   const {goal} = useSelector(state => state.water);
-  const {weightStatus, femaleStatus, heightStatus} = useSelector(
+  const {weightStatus, femalestatus, heightStatus} = useSelector(
     state => state.info,
   );
   const [step, setStep] = useState(null);
   const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
-  const [female, setFemale] = useState(femaleStatus);
-  const [weight, setWeight] = useState(weightStatus);
-
+  const [female, setFemale] = useState('Seçiniz');
+  const [weight, setWeight] = useState(0);
   //Sayfa ilk açıldığında tetiklenen method
   useEffect(() => {
     dispatch(getGoal());
     console.log('sdfdf', goal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  const handleCloseIntro = props => {
+    dispatch({type: 'INFO_SCREEN_STATUS', payload: false});
+    navigation.navigate('Home');
+  };
   return (
-    <View flex bg-white>
+    <View flex bg-white padding-10 center>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <SafeAreaView flex>
         <ScrollView>
@@ -51,15 +51,42 @@ const ProfileScreen = () => {
             />
             <View style={styles.info}>
               <Text>
-                Çay ve kahve gibi sıcak şeylerden hemen sonra soğuk su içmeyin.
+                Uygulamayı kullanabilmek için Lütfen aşağıdaki bilgileri
+                doldurun
               </Text>
             </View>
           </View>
+          <View style={styles.waterIcon}>
+            <Image
+              source={require('../assets/water.png')}
+              style={{width: 50, height: 50}}
+            />
+            <View style={styles.info}>
+              <Text>
+                Uygulamanın birimi ml'dir. Litre girerken 1000 ile çarparak
+                giriniz.
+              </Text>
+            </View>
+          </View>
+          <View style={styles.waterIcon}>
+            <Image
+              source={require('../assets/water.png')}
+              style={{width: 50, height: 50}}
+            />
+            <View style={styles.info}>
+              <Text>
+                Uygulamada günlük olarak girdiğiniz her miktar
+                listelenmektedir.Dilediğiniz gibi miktarı silebilir ya da
+                güncelleyebilirsiniz.
+              </Text>
+            </View>
+          </View>
+
           <Text style={{fontSize: 20, fontWeight: '600', paddingLeft: 10}}>
-            GENEL
+            GENEL BİLGİLER
           </Text>
           <View style={styles.itemContainer}>
-            <Text>Tüketim Hedefi</Text>
+            <Text>Tüketim Hedefi (Günlük)</Text>
             <TouchableOpacity
               onPress={() => {
                 setStep(1);
@@ -68,7 +95,6 @@ const ProfileScreen = () => {
               <Text style={styles.itemText}>{goal.dailyGoal}</Text>
             </TouchableOpacity>
           </View>
-
           <View style={styles.itemContainer}>
             <Text>Cinsiyet</Text>
             <TouchableOpacity
@@ -89,6 +115,10 @@ const ProfileScreen = () => {
               <Text style={styles.itemText}>{weight}</Text>
             </TouchableOpacity>
           </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleCloseIntro}>
+            <Text>DEVAM ET</Text>
+          </TouchableOpacity>
         </ScrollView>
         <Modal
           isVisible={modal}
@@ -134,9 +164,13 @@ const ProfileScreen = () => {
                   value={'Kadın'}
                   label={'Kadın'}
                   color={Colors.green30}
-                  onPress={() => setFemale('Kadın', setModal(false))}
+                  onPress={() => {
+                    setFemale('Kadın');
+                    setModal(false);
+                    dispatch({type: 'INFO_SCREEN_FEMALE', payload: 'Kadın'});
+                  }}
                   selected={() => setFemale('Kadın')}
-                  // labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+                  labelStyle={styles.labelStyle}
                   contentOnLeft
                 />
                 <RadioButton
@@ -146,15 +180,20 @@ const ProfileScreen = () => {
                   onPress={() => {
                     setFemale('Erkek');
                     setModal(false);
+                    dispatch({type: 'INFO_SCREEN_FEMALE', payload: 'Erkek'});
                   }}
                   selected={() => setFemale('Erkek')}
                   contentOnLeft
+                  labelStyle={styles.labelStyle}
                 />
               </View>
             ) : step === 3 ? (
               <View>
                 <TextInput
-                  onChangeText={setWeight}
+                  onChangeText={weight => {
+                    setWeight(weight);
+                    dispatch({type: 'INFO_SCREEN_WEIGHT', payload: weight});
+                  }}
                   value={weight}
                   placeholder="Kilonuzu girin"
                   keyboardType="default"
@@ -174,7 +213,7 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
+export default InfoScreen;
 
 const styles = StyleSheet.create({
   itemContainer: {
@@ -213,9 +252,9 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 15,
     borderRadius: 10,
-    margin: 10,
+    margin: 8,
     marginBottom: 14,
-    marginTop: 20,
+    marginTop: 10,
   },
   button: {
     width: '90%',
@@ -226,5 +265,10 @@ const styles = StyleSheet.create({
     marginTop: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  labelStyle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 8,
   },
 });
