@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Dimensions,
   StatusBar,
   StyleSheet,
   Text,
@@ -25,12 +24,17 @@ import {
   setIntake,
 } from '../redux/actions/drinkWaterAction';
 import moment from 'moment';
-var control = false;
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const {intakeList, goal, intake, setWater, deleteWater} = useSelector(
-    state => state.water,
-  );
+  const {
+    intakeList,
+    goal,
+    intake,
+    setWater,
+    deleteWater,
+    addWater,
+    dailyWaterDeleteStatus,
+  } = useSelector(state => state.water);
   const [isModalVisible, setModalVisible] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [number, setNumber] = useState('');
@@ -42,31 +46,12 @@ const HomeScreen = () => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
     setNumber('');
-    console.log('setItem:', item);
   };
 
   //Sayfa ilk açıldığında tetiklenen method
   useEffect(() => {
     dispatch(getIntakeList());
     dispatch(getGoal());
-    console.log('intake list:', intakeList);
-    console.log('GOAL:', goal);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  //Bugünün tarihine göre filtreleme işlemi yapar. Bugüne ait kayıtları getirir.
-  useEffect(() => {
-    const today = moment().startOf('day');
-    const filteredItems = intakeList.filter(item => {
-      const itemDate = moment(item.createdAt).startOf('day');
-      return itemDate.isSame(today);
-    });
-
-    setDailyList(filteredItems);
-    dailyList?.map(item => {
-      setDailyWater(item?.amount + dailyWater);
-    });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,32 +63,53 @@ const HomeScreen = () => {
       return itemDate.isSame(today);
     });
     setDailyList(filteredItems);
-    dailyList?.map(item => {
-      setDailyWater(item?.amount + dailyWater);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleteWater, setWater]);
+    if (filteredItems.length > 0) {
+      Promise.all(filteredItems.map(item => parseFloat(item.amount))).then(
+        amounts => {
+          const totalAmount = amounts.reduce((acc, curr) => acc + curr, 0);
+          setDailyWater(totalAmount);
+          console.log('dailyWater', totalAmount);
+        },
+      );
+    } else {
+      setDailyWater(0);
+    }
+  }, [deleteWater, setWater, intakeList, addWater]);
+
+  //Eğer dailyList varsa ona göre günlük içilen suyu tekrar toplar günceller
+  useEffect(() => {
+    if (dailyList) {
+      Promise.all(dailyList.map(item => parseFloat(item.amount))).then(
+        amounts => {
+          const totalAmount = amounts.reduce((acc, curr) => acc + curr, 0);
+          setDailyWater(totalAmount);
+          console.log('dailyWater', totalAmount);
+        },
+      );
+    }
+  }, [dailyList]);
 
   //Su ekleme metodu
-  const handleAddWater = () => {
+  const handleAddWater = async () => {
     const currentDate = moment().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-    console.log('aaa');
     const data = {
-      amount: 200,
+      amount: 120,
       unit: 'ml',
       createdAt: currentDate,
     };
-    dispatch(postIntake(data));
-    dispatch(getIntakeList());
+    await dispatch(postIntake(data));
   };
 
   //Eklenilen suyu siler.
-  const deleteWaterFunc = id => {
+  const deleteWaterFunc = async id => {
     console.log('delete', id);
-    dispatch(deleteIntake(id, item));
     setDeleteModal(!deleteModal);
-    dispatch(getIntakeList());
+    await dispatch(deleteIntake(id, item));
+    if (dailyWaterDeleteStatus) {
+      dispatch(getIntakeList());
+    }
   };
+
   //Suyu güncelleyen method.
   const setDrink = () => {
     const data = {
@@ -173,12 +179,11 @@ const HomeScreen = () => {
           title={goal?.dailyGoal + '  ml'}
           titleFontSize={12}
           titleColor={'grey'}
-          initialValue={dailyWater}
+          // initialValue={dailyWater}
           titleStyle={{fontWeight: 'bold'}}
           // subtitle="dsfsdfsd"
         />
         <Text style={{marginTop: 10}}>Günlük içecek hedefi</Text>
-        {/* <MaterialIcons name={'dds'} size={20} color={'red'} /> */}
         <TouchableOpacity onPress={handleAddWater}>
           <Text>Su Ekle</Text>
           <Image
@@ -189,11 +194,20 @@ const HomeScreen = () => {
       </View>
       <View style={styles.list}>
         <Text>Bugünün kayıtları</Text>
-        <FlatList
-          data={dailyList}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
+        {dailyList?.length > 0 ? (
+          <FlatList
+            data={dailyList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+          />
+        ) : (
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text
+              style={{fontSize: 18, textAlign: 'center', fontWeight: '600'}}>
+              Henüz su eklenmemiş. Lütfen içtiğiniz su miktarını giriniz...
+            </Text>
+          </View>
+        )}
       </View>
 
       <Modal

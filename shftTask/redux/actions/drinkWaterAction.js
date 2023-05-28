@@ -3,7 +3,6 @@ import {Alert} from 'react-native';
 import moment from 'moment';
 
 export const getIntakeList = () => {
-  const today = moment().startOf('day');
   return dispatch => {
     dispatch({type: 'GET_INTAKE_LIST_REQUEST'}),
       axios
@@ -49,6 +48,7 @@ export const postIntake = data => {
             type: 'POST_INTAKE_SUCCESS',
             payload: res.data,
           });
+          dispatch(getIntakeList());
         })
         .catch(() => {
           Alert.alert('Bir hata Oluştu');

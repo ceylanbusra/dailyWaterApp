@@ -6,7 +6,10 @@ const INITIAL_STATE = {
   intake: [],
   deleteWater: [],
   setWater: [],
-  dailyWaterList: [],
+  addWater: [],
+  dailyWaterListStatus: false,
+  dailyWaterSetStatus: false,
+  dailyWaterDeleteStatus: false,
 };
 
 const DrinkWaterReducer = (state = INITIAL_STATE, action) => {
@@ -31,12 +34,19 @@ const DrinkWaterReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         deleteWater: action.payload,
+        dailyWaterDeleteStatus: true,
       };
 
     case 'SET_INTAKE_LIST_SUCCESS':
       return {
         ...state,
         setWater: action.payload,
+        dailyWaterSetStatus: true,
+      };
+    case 'POST_INTAKE_SUCCESS':
+      return {
+        ...state,
+        addWater: action.payload,
       };
     default:
       return state;
