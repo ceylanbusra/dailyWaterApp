@@ -4,10 +4,12 @@ import LottieView from 'lottie-react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 const Splash = ({navigation}) => {
+  const dispatch = useDispatch();
   const {info} = useSelector(state => state.info);
 
   setTimeout(() => {
     info ? navigation.navigate('InfoScreen') : navigation.navigate('Home');
+    dispatch({type: 'INFO_SCREEN_STATUS', payload: false});
   }, 3000);
   return (
     <SafeAreaView style={styles.container}>

@@ -4,9 +4,10 @@ import {
   View,
   ScrollView,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {Colors, Text} from 'react-native-ui-lib';
 import {BarChart} from 'react-native-chart-kit';

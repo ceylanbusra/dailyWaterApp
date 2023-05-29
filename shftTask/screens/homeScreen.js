@@ -8,9 +8,9 @@ import {
   Button,
   TextInput,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import {useDispatch, useSelector} from 'react-redux';
