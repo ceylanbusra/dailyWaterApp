@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const Splash = ({navigation}) => {
   const {info} = useSelector(state => state.info);
-  console.log('infoStatus:', info);
+
   setTimeout(() => {
     info ? navigation.navigate('InfoScreen') : navigation.navigate('Home');
   }, 3000);

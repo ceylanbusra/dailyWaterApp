@@ -8,7 +8,6 @@ export const getIntakeList = () => {
       axios
         .get('https://645ce732e01ac6105896bbce.mockapi.io/intake')
         .then(res => {
-          console.log('res', res.data);
           dispatch({
             type: 'GET_INTAKE_LIST_SUCCESS',
             payload: res.data,
@@ -26,7 +25,6 @@ export const getIntake = id => {
       axios
         .get(`https://645ce732e01ac6105896bbce.mockapi.io/intake/${id}`)
         .then(res => {
-          console.log('res');
           dispatch({
             type: 'GET_INTAKE_SUCCESS',
             payload: res.data,
@@ -43,7 +41,6 @@ export const postIntake = data => {
       axios
         .post(`https://645ce732e01ac6105896bbce.mockapi.io/intake`, data)
         .then(res => {
-          console.log('res');
           dispatch({
             type: 'POST_INTAKE_SUCCESS',
             payload: res.data,
@@ -61,7 +58,6 @@ export const setIntake = (id, data) => {
       axios
         .put(`https://645ce732e01ac6105896bbce.mockapi.io/intake/${id}`, data)
         .then(res => {
-          console.log('res');
           dispatch({
             type: 'SET_INTAKE_LIST_SUCCESS',
             payload: res.data,
@@ -83,7 +79,6 @@ export const deleteIntake = (id, data) => {
           data,
         )
         .then(res => {
-          console.log('res');
           dispatch({
             type: 'DELETE_INTAKE_SUCCESS',
             payload: res.data,
@@ -102,7 +97,6 @@ export const getGoal = () => {
       axios
         .get(`https://645ce732e01ac6105896bbce.mockapi.io/goal/1`)
         .then(res => {
-          console.log('res');
           dispatch({
             type: 'GET_GOAL_SUCCESS',
             payload: res.data,

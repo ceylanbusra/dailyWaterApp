@@ -46,7 +46,6 @@ const HomeScreen = () => {
   const [step, setStep] = useState(null);
   const [water1, setWater1] = useState(null);
 
-  console.log('werty', info);
   //Modalın açma kapatma durumlarını kontrol eder.
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -74,7 +73,6 @@ const HomeScreen = () => {
         amounts => {
           const totalAmount = amounts.reduce((acc, curr) => acc + curr, 0);
           setDailyWater(totalAmount);
-          console.log('dailyWater', totalAmount);
         },
       );
     } else {
@@ -89,9 +87,8 @@ const HomeScreen = () => {
         amounts => {
           const totalAmount = amounts.reduce((acc, curr) => acc + curr, 0);
           setDailyWater(totalAmount);
-          console.log('total amd', totalAmount);
+
           dispatch({type: 'CALCULATE_DAILY_WATER', payload: totalAmount});
-          console.log('dailyWater', totalAmount);
         },
       );
     }
@@ -112,7 +109,6 @@ const HomeScreen = () => {
 
   //Eklenilen suyu siler.
   const deleteWaterFunc = async id => {
-    console.log('delete', id);
     setDeleteModal(!deleteModal);
     await dispatch(deleteIntake(id, item));
     if (dailyWaterDeleteStatus) {
@@ -127,7 +123,7 @@ const HomeScreen = () => {
       unit: 'ml',
       createdAt: item?.createdAt,
     };
-    console.log('DATA:', data);
+
     dispatch(setIntake(item?.id, data));
     setModalVisible(!isModalVisible);
     setNumber('');
@@ -155,7 +151,7 @@ const HomeScreen = () => {
           onPress={() => {
             toggleModal();
             setItem(item);
-            console.log('setITem:', item);
+
             dispatch(getIntake(item?.id));
           }}>
           <Image

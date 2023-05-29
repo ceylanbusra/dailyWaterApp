@@ -33,7 +33,7 @@ const ProfileScreen = () => {
   //Sayfa ilk açıldığında tetiklenen method
   useEffect(() => {
     dispatch(getGoal());
-    console.log('sdfdf', goal);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

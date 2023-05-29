@@ -14,7 +14,7 @@ import {BarChart} from 'react-native-chart-kit';
 const DetailScreen = () => {
   const dispatch = useDispatch();
   const {intakeList, goal, dailyDrinkWater} = useSelector(state => state.water);
-  console.log('Daily water:', dailyDrinkWater);
+
   //Aylık toplam değeri hesaplayan fonksiyon
   function calculateMonthlyTotals(data) {
     const monthlyTotals = {};
@@ -30,7 +30,6 @@ const DetailScreen = () => {
     return monthlyTotals;
   }
   const monthlyTotals = calculateMonthlyTotals(intakeList);
-  console.log('AAA', monthlyTotals);
 
   //Haftalık Toplam Total değer
   function calculateWeeklyTotals(data) {
@@ -61,7 +60,7 @@ const DetailScreen = () => {
   }
 
   const weeklyTotals = calculateWeeklyTotals(intakeList);
-  console.log('WeeklyTotals:', weeklyTotals);
+
   const weeklyTotalAmount = Object.values(weeklyTotals).reduce(
     (acc, value) => acc + value,
     0,
