@@ -26,7 +26,7 @@ Kullanıcı girdiği su miktarını istediği gibi ekleme ve güncelleme işleml
   -yarn android
   
   //UYGULAMA GÖRSELLERI
-  
+    <img src="https://github.com/ceylanbusra/shftTask/assets/68326893/bfe17bea-c38f-4bbc-96a7-68ddc3baac88" width="200" />
 <img src=('https://github.com/ceylanbusra/shftTask/assets/68326893/bfe17bea-c38f-4bbc-96a7-68ddc3baac88') />
 ![Simulator Screen Shot - iPhone 13 - 2023-05-29 at 16 16 09](https://github.com/ceylanbusra/shftTask/assets/68326893/99d41426-463d-407d-a900-0b1d1cf29b68)
 ![Simulator Screen Shot - iPhone 13 - 2023-05-29 at 00 06 14](https://github.com/ceylanbusra/shftTask/assets/68326893/f20b71b2-0c13-4a5a-827c-d3e6011b2a58)
