@@ -9,7 +9,6 @@ const Splash = ({navigation}) => {
 
   setTimeout(() => {
     info ? navigation.navigate('InfoScreen') : navigation.navigate('Home');
-    dispatch({type: 'INFO_SCREEN_STATUS', payload: false});
   }, 3000);
   return (
     <SafeAreaView style={styles.container}>
