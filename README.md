@@ -30,7 +30,7 @@ Kullanıcı girdiği su miktarını istediği gibi ekleme ve güncelleme işleml
   
   
   
-<img src="https://github.com/ceylanbusra/shftTask/ScreenShot/1" width="200" />
+<img src="https://github.com/ceylanbusra/shftTask/screenShot/1" width="200" />
 <img src="https://github.com/ceylanbusra/shftTask/assets/68326893/6e9d457b-ffb1-403c-8744-5709e761b675" width="200" />
 <img src="https://github.com/ceylanbusra/shftTask/assets/68326893/99d41426-463d-407d-a900-0b1d1cf29b68" width="200" />
 <img src="https://github.com/ceylanbusra/shftTask/assets/68326893/a751c3ca-88f1-44e2-94fd-872ce96f0ef3" width="200" />
