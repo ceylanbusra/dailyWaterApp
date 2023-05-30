@@ -1,5 +1,5 @@
-# shftTask 
-shft şirketinin react-native developer görevidir. Uygulama Su içme takibi üzerine yapılmıştır.  Günlük ,haftalık ve aylık hedefler mevcuttur.  Bu hedeflere ne kadar yaklaştığını ya da ulaştıysa ulaştığını temsil eder. 
+# dailyWaterApp
+Uygulama Su içme takibi üzerine yapılmıştır.  Günlük ,haftalık ve aylık hedefler mevcuttur.  Bu hedeflere ne kadar yaklaştığını ya da ulaştıysa ulaştığını temsil eder. 
 Aynı zamanda kullanıcı için kilosuna göre ortalama günlük kaç ml ve lt su almasını gerektiğini tavsiye eder.
 Kullanıcı girdiği su miktarını istediği gibi ekleme ve güncelleme işlemleriyle değiştrebilir.
 
